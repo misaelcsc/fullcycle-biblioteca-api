@@ -28,4 +28,4 @@ def get_member(member_id: int, db: Session = Depends(get_db)):
     member = db.query(models.Member).filter(models.Member.id == member_id).first()
     if not member:
         raise HTTPException(status_code=404, detail="Membro não encontrado")
-    return members
+    return member

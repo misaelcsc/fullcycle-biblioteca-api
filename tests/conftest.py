@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from src.main import app
 from src.database import Base, get_db
 
-# Banco em memória só para os testes
+# Banco de teste em memória (SQLite continua para os testes, mais rápido)
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

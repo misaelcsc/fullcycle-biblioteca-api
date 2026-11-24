@@ -1,13 +1,16 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from src.config import settings
+import os
 
-engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread": False})
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "sqlite:///./biblioteca.db"
+)
+
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
-class Base(DeclarativeBase):
-    pass
+Base = declarative_base()
 
 
 def get_db():

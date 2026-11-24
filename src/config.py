@@ -2,12 +2,11 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = "Biblioteca API"
-    DATABASE_URL: str = "sqlite:///./biblioteca.db"
-    DEBUG: bool = True
+    app_name: str = "Biblioteca API"
+    app_version: str = "1.0.0"
+    database_url: str = "sqlite:///./biblioteca.db"
 
-    class Config:
-        env_file = ".env"
+model_config = {"env_file": ".env"}
 
 
 settings = Settings()

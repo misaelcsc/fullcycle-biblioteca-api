@@ -5,7 +5,7 @@ from src.config import settings
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title=settings.APP_NAME)
+app = FastAPI(title=settings.app_name)
 
 app.include_router(books.router)
 app.include_router(members.router)

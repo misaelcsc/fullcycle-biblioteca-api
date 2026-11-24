@@ -46,3 +46,11 @@ def return_loan(loan_id: int, db: Session = Depends(get_db)):
 @router.get("/", response_model=list[schemas.LoanResponse])
 def list_loans(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return db.query(models.Loan).offset(skip).limit(limit).all()
+
+
+@router.get("/{loan_id}", response_model=schemas.LoanResponse)
+def get_loan(loan_id: int, db: Session = Depends(get_db)):
+    loan = db.query(models.Loan).filter(models.Loan.id == loan_id).first()
+    if not loan:
+        raise HTTPException(status_code=404, detail="Empréstimo não encontrado")
+    return loan

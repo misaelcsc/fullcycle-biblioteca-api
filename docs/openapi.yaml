@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: Biblioteca API
+  description: API REST para gerenciamento de biblioteca
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /loans/:
+    post:
+      summary: Criar empréstimo
+      operationId: createLoan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanCreate'
+      responses:
+        '201':
+          description: Empréstimo criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanResponse'
+        '400':
+          description: Livro já emprestado
+        '404':
+          description: Livro ou membro não encontrado
+
+  /loans/{loan_id}/return:
+    post:
+      summary: Devolver livro
+      operationId: returnLoan
+      parameters:
+        - name: loan_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Livro devolvido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanResponse'
+        '404':
+          description: Empréstimo não encontrado
+
+components:
+  schemas:
+    LoanCreate:
+      type: object
+      required:
+        - book_id
+        - member_id
+      properties:
+        book_id:
+          type: integer
+        member_id:
+          type: integer
+
+    LoanResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        book_id:
+          type: integer
+        member_id:
+          type: integer
+        loan_date:
+          type: string
+          format: date-time
+        return_date:
+          type: string
+          format: date-time
+          nullable: true
+        returned:
+          type: boolean

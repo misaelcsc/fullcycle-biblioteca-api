@@ -10,35 +10,28 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: biblioteca
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - uses: actions/checkout@v4
 
       - name: Build and start services
-        run: docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait for services to be ready
         run: |
-          sleep 15
-          docker-compose ps
+          echo "Esperando serviços ficarem prontos..."
+          for i in {1..30}; do
+            if docker compose exec -T api python -c "from src.database import engine; engine.connect()" 2>/dev/null; then
+              echo "API pronta!"
+              break
+            fi
+            echo "Tentativa $i..."
+            sleep 5
+          done
+          docker compose ps
 
       - name: Run tests
-        run: docker-compose exec -T api pytest tests/ -v --cov=src --cov-report=term-missing
+        run: docker compose exec -T api pytest tests/ -v --cov=src --cov-report=term-missing
 
       - name: Show logs on failure
         if: failure()
-        run: docker-compose logs
+        run: docker compose logs

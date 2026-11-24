@@ -18,3 +18,7 @@ git clone https://github.com/seu-usuario/fullcycle-biblioteca-api.git
 cd fullcycle-biblioteca-api
 cp .env.example .env
 docker-compose up --build
+
+## CI/CD
+
+Workflow de CI no GitHub Actions: [ver execução verde ✅](https://github.com/misaelcsc/fullcycle-biblioteca-api/actions/runs/45314067547)

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from datetime import datetime
+from datetime import datetime, UTC
 from src.database import Base
 
 
@@ -34,7 +34,8 @@ class Loan(Base):
     id = Column(Integer, primary_key=True, index=True)
     book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
     member_id = Column(Integer, ForeignKey("members.id"), nullable=False)
-    loan_date = Column(DateTime, default=datetime.utcnow)
+    loan_date = Column(DateTime, default=lambda: datetime.now(UTC))
+
     return_date = Column(DateTime, nullable=True)
     returned = Column(Boolean, default=False)
 

@@ -1,16 +1,20 @@
-# Full Cycle — Projeto Final (Nível B)
+# Biblioteca API
 
-API de biblioteca para empréstimo de livros. Projeto individual desenvolvido como trabalho final do curso Full Cycle.
+API REST para gerenciamento de biblioteca, desenvolvida com **FastAPI** e **Docker**.
 
-## Como subir a aplicação
+## 🚀 Tecnologias
+
+- Python 3.12
+- FastAPI
+- SQLAlchemy
+- Pydantic
+- Docker & Docker Compose
+- Pytest
+
+## 📦 Instalação
 
 ```bash
-# Clone o repositório
-git clone https://github.com/misael/fullcycle-biblioteca-api.git
+git clone https://github.com/seu-usuario/fullcycle-biblioteca-api.git
 cd fullcycle-biblioteca-api
-
-# Copie o .env.example para .env
 cp .env.example .env
-
-# Suba com Docker Compose
 docker-compose up --build
